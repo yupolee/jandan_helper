@@ -34,11 +34,6 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 	initPopupPage(undefined, null)
 });
 
-window.addEventListener('storage', onStorageChange, false);
-
-function onStorageChange() {
-	buildIcon();
-}
 
 chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
 	switch (request.message) {

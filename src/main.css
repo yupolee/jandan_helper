@@ -16,7 +16,8 @@
   cursor: pointer;
 }
 
-.momane_blockUser {
+.momane_blockUser,
+.momane_releaseUser {
   cursor: pointer;
   color: green !important;
   display: block;

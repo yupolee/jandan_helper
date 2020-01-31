@@ -40,9 +40,44 @@ function addBlockButtonAndBlockUser(blockUsers) {
   });
 }
 
+function removeBlockButtonAndShowUser(user) {
+  $(".author").each(function () {
+    let that = $(this);
+    let userCode = getUserCode(that);
+    let row = that.parent();
+    if (userCode === user) {
+      that.find(".momane_releaseUser").remove();
+      if (that.find(".momane_blockUser").length < 1) {
+        that.append("<a class='momane_blockUser'>屏蔽</a>");
+      }
+      row.parent().removeClass("momane_blocked").find(".momane_blockedContent").remove();
+      row.show();
+    }
+  });
+}
+
 $("body").on("click", ".momane_blockUser", function () {
   let that = $(this);
   let userCode = getUserCode(that.parent());
+  blockUser(userCode)
+}).on("click", ".momane_checkAnyway", function () {
+  let that = $(this);
+  let content = that.parent().prev();
+  if (content.is(":visible")) {
+    that.text("再手贱一回");
+    content.hide();
+  } else {
+    content.show();
+    that.text("真不该手贱");
+    content.find(".momane_blockUser").text("解禁").prop("class", "momane_releaseUser")
+  }
+}).on("click", ".momane_releaseUser", function () {
+  let that = $(this);
+  let userCode = getUserCode(that.parent());
+  unblockUser(userCode);
+});
+
+function blockUser(userCode) {
   ss.get(storageKeys.blockedUsers, i => {
     let blockedUsers = i[storageKeys.blockedUsers] || [];
     if (!blockedUsers.includes(userCode)) {
@@ -55,17 +90,23 @@ $("body").on("click", ".momane_blockUser", function () {
       addBlockButtonAndBlockUser(blockedUsers);
     });
   });
-}).on("click", ".momane_checkAnyway", function () {
-  let that = $(this);
-  let content = that.parent().prev();
-  if (content.is(":visible")) {
-    that.text("再手贱一回");
-    content.hide();
-  } else {
-    content.show();
-    that.text("真不该手贱");
-  }
-});
+}
+
+function unblockUser(userCode) {
+  ss.get(storageKeys.blockedUsers, i => {
+    let blockedUsers = i[storageKeys.blockedUsers] || [];
+    const userIndex = blockedUsers.indexOf(userCode);
+    if (userIndex < 0) {
+      return
+    }
+    blockedUsers.splice(userIndex, 1)
+    let temp = {};
+    temp[storageKeys.blockedUsers] = blockedUsers;
+    ss.set(temp, () => {
+      removeBlockButtonAndShowUser(userCode)
+    });
+  });
+}
 
 
 function getUserCode($el) {

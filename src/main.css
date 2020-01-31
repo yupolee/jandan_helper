@@ -25,11 +25,10 @@
 
 .momane_blockedContent {
   text-align: center;
-  text-decoration: underline;
   color: green;
   cursor: pointer;
 }
 
 .momane_blocked {
-  border: 1px solid green;
+  border: 1px solid #e5e5e5;
 }

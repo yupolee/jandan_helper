@@ -1,0 +1,48 @@
+{
+  "name": "jandan_helper",
+  "version": "1.0.0",
+  "description": "A Jandan.net helper tool box",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HangYang/jandan_helper.git"
+  },
+  "keywords": [
+    "jandan",
+    "webextension",
+    "chrome extension",
+    "firefox extension",
+    "firefox addon"
+  ],
+  "author": "Hank X",
+  "license": "MIT",
+  "devDependencies": {
+    "dot-json": "^1.2.0",
+    "web-ext": "^4.0.0",
+    "xo": "^0.25.3"
+  },
+  "scripts": {
+    "test": "xo",
+    "fix": "xo --fix",
+    "build": "npm run update-version && npm run zip",
+    "update-version": "VERSION=$(date -u +%y.%-m.%-d.%-H%M); echo $VERSION; dot-json src/manifest.json version $VERSION",
+    "zip": "web-ext build --source-dir src --artifacts-dir dist"
+  },
+  "xo": {
+    "envs": [
+      "webextensions",
+      "browser",
+      "jquery"
+    ],
+    "ignores": [
+      "dist",
+      "src/lib/jquery*"
+    ]
+  },
+  "dependencies": {
+    "global": "^4.3.2"
+  },
+  "bugs": {
+    "url": "https://github.com/HangYang/jandan_helper/issues"
+  },
+  "homepage": "https://github.com/HangYang/jandan_helper#readme"
+}

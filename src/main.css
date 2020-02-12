@@ -16,11 +16,22 @@
   cursor: pointer;
 }
 
-.momane_blockUser,
-.momane_releaseUser {
+.momane_blockUser, .momane_releaseUser  {
+  visibility:hidden
+}
+
+.author:hover .momane_blockUser  {
+  cursor: pointer;
+  color: firebrick !important;
+  display: block;
+  visibility:visible
+}
+
+.author:hover .momane_releaseUser  {
   cursor: pointer;
   color: green !important;
   display: block;
+  visibility:visible
 }
 
 .momane_blockedContent {
